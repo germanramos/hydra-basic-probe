@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo yum install rpm-build rpmdevtools
 rpmdev-setuptree
 mkdir ~/rpmbuild/SOURCES/hydra_basic_probe-2

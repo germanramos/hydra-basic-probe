@@ -1,7 +1,8 @@
-App Manager Info Server
-=======================
+Hydra Basic Probe
+=================
 
-Monitors the system resources and the port our application is listening on and notifies.
+Monitors system resources of the system.
+Monitors a proccess and port of our application and notifies to one or more hydra servers
 
 # Deploy
 
@@ -19,8 +20,6 @@ Monitors the system resources and the port our application is listening on and n
   * pip install psutil 
 * ssh
 * git
-* Increase max number of file descriptors - http://www.xenoclast.org/doc/benchmark/HTTP-benchmarking-HOWTO/node7.html
-
 
 ## Get source code
 
@@ -28,16 +27,11 @@ Monitors the system resources and the port our application is listening on and n
 git clone https://github.com/innotech/hydra_basic_probe.git
 ```
 
+# Configuring
+
+First tune config file. See example with documetation at nagios_basic_probe.cfg
+
 # Launching
-
-First start your application on the desired port. Then start the App Manager Info Server
-
 ```
-python app_manager_info_server.py <host> <public_port> <network_interface> <infoserver_port> <pid>
+python app_manager_info_server.py [-c config_file]
 ```
-
-* host - the host of the application, if the App Manager Info Server is in the same machine, you can use localhost.
-* public_port - port used by your application (or one of them if many are used)
-* network_interface - interface the server will be started (0.0.0.0 for any interface)
-* infoserver_port - port used by the App Manager Info Server to receive requests from the App Manager.
-* pid - pid of your application.

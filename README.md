@@ -33,5 +33,5 @@ First tune config file. See example with documetation at nagios_basic_probe.cfg
 
 # Launching
 ```
-python app_manager_info_server.py [-c config_file]
+python hydra_basic_probe.py [-c config_file]
 ```

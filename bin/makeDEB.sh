@@ -14,11 +14,18 @@ mkdir -p ~/debbuild/etc/init.d
 cp hydra-basic-probe-init.d.sh ~/debbuild/etc/init.d/hydra-basic-probe
 
 mkdir -p ~/debbuild/usr/local/hydra-basic-probe
-cp ../src/*  ~/debbuild/usr/local/hydra-basic-probe
+cp ../src/hydra-basic-probe.py  ~/debbuild/usr/local/hydra-basic-probe
+cp ../src/parseStatusDat.py  ~/debbuild/usr/local/hydra-basic-probe
+
+chmod -R 644 ~/debbuild/usr/local/hydra-basic-probe/* ~/debbuild/etc/hydra-basic-probe/*
+chmod 755 ~/debbuild/etc/init.d/hydra-basic-probe
+chmod 755 ~/debbuild/usr/local/hydra-basic-probe/hydra-basic-probe.py
+sudo chown -R root:root ~/debbuild/*
 
 pushd ~
-dpkg-deb --build debbuild
+sudo dpkg-deb --build debbuild
 
 popd
-mv ~/debbuild.deb hydra-basic-probe-2.0.deb
-	
+sudo mv ~/debbuild.deb hydra-basic-probe-2.0.deb
+
+

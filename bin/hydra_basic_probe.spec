@@ -27,7 +27,6 @@ install -m 0755 hydra_basic_probe_init.d.sh $RPM_BUILD_ROOT/etc/init.d/hydra_bas
 install -m 0755 -d $RPM_BUILD_ROOT/etc/hydra_basic_probe
 install -m 0644 hydra_basic_probe.cfg $RPM_BUILD_ROOT/etc/hydra_basic_probe/hydra_basic_probe.cfg
 install -m 0644 nagios_parse_example.txt $RPM_BUILD_ROOT/etc/hydra_basic_probe/nagios_parse_example.txt
-install -m 0644 README.md $RPM_BUILD_ROOT/etc/hydra_basic_probe/README.md
 %clean
 rm -rf $RPM_BUILD_ROOT
 %post
@@ -40,7 +39,7 @@ echo   You should edit config file /etc/hydra_basic_probe/hydra_basic_probe.cfg
 /usr/local/hydra_basic_probe/parseStatusDat.py
 /usr/local/hydra_basic_probe/parseStatusDat.pyc
 /usr/local/hydra_basic_probe/parseStatusDat.pyo
-/etc/init.d/forever.sh
+/usr/local/hydra_basic_probe/forever.sh
 /etc/hydra_basic_probe/hydra_basic_probe.cfg
 /etc/hydra_basic_probe/nagios_parse_example.txt
-/etc/hydra_basic_probe/README.md
+/etc/init.d/hydra_basic_probe

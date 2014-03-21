@@ -2,7 +2,7 @@
 
 # Hydra Basic Probe - Startup script for Hydra Basic Probe
 
-# chkconfig: 35 85 15
+# chkconfig: 35 99 15
 # description: App for monitoring process to report status to Hydra 
 # processname: python
 # Default-Start: 2 3 4 5

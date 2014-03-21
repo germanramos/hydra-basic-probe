@@ -5,6 +5,8 @@
 # chkconfig: 35 85 15
 # description: App for monitoring process to report status to Hydra 
 # processname: python
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
 # config: 
 # pidfile: /var/run/hydra_basic_probe.pid
 
@@ -16,10 +18,9 @@ fi
 
 APP_NAME=hydra_basic_probe
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/local/hydra_basic_probe/forever.sh
+DAEMON=/usr/local/hydra_basic_probe/hydra_basic_probe.py
+DAEMON_ARGS="-c /etc/hydra_basic_probe/hydra_basic_probe.cfg"
 RUNDIR=/usr/local/hydra_basic_probe
-USER=root
-GROUP=root
 PID_DIR=/var/run
 PID_NAME=$APP_NAME.pid
 PID_FILE=$PID_DIR/$PID_NAME
@@ -32,7 +33,7 @@ start)
     echo Already running with PID `cat $PID_FILE`
   else
     if [[ $(echo $DISTRO_INFO | grep 'Debian\|Ubuntu') != "" ]]; then
-      if start-stop-daemon --start --pidfile $PID_FILE --chdir $RUNDIR --background --make-pidfile --chuid $USER:$GROUP --exec $DAEMON
+      if start-stop-daemon --start --pidfile $PID_FILE --chdir $RUNDIR --background --make-pidfile --exec $DAEMON -- $DAEMON_ARGS
       then
         echo ok
       else
@@ -44,7 +45,7 @@ start)
       fi
       sudo chown -R $USER:$GROUP /var/log/${APP_NAME}
       cd $RUNDIR
-      sudo -u "$USER" $DAEMON $DAEMON_ARGS &
+      $DAEMON $DAEMON_ARGS &>/dev/null &
       RETVAL=$?
       if [ $RETVAL -eq 0 ]
       then
@@ -61,14 +62,8 @@ start)
 stop)
   if [ -f $PID_FILE ]
   then
-	PID=`cat $PID_FILE`
-	PIDS="$PID `ps -ef| awk '$3 == '$PID' { print $2 }'`"
-      for i in $PIDS
-	  do
-	    echo killing $i
-	    kill -9 $i
-	  done
-	  rm -f $PID_FILE
+    kill -9 `cat $PID_FILE`
+    rm -f $PID_FILE
   else
     echo $PID_FILE not found
   fi

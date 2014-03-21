@@ -62,7 +62,8 @@ def check():
         # Check CPU and Memory
         logging.debug("Checking CPU and Memory")
         data["cpuLoad"] = psutil.cpu_percent(interval=0.1, percpu=False)
-        data["memLoad"] = psutil.virtual_memory().percent
+        #data["memLoad"] = psutil.virtual_memory().percent
+        data["memLoad"] = psutil.phymem_usage().percent
         
         # Check port open (if option exists) 
         if config.get("MAIN", "check_enabled") == "true" and config.has_option("MAIN", "check_host") and config.has_option("MAIN", "check_port"):
@@ -72,6 +73,7 @@ def check():
             data["state"] = stateEnum.READY
              
     except Exception, e:
+        logging.debug(str(e))
         data["state"] = stateEnum.NOT_RUNNING
               
     return data

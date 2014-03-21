@@ -21,7 +21,7 @@ install -m 0755 hydra-basic-probe.py $RPM_BUILD_ROOT/usr/local/hydra-basic-probe
 install -m 0644 parseStatusDat.py $RPM_BUILD_ROOT/usr/local/hydra-basic-probe/parseStatusDat.py
 
 install -m 0755 -d $RPM_BUILD_ROOT/etc/init.d
-install -m 0755 hydra-basic-probe_init.d.sh $RPM_BUILD_ROOT/etc/init.d/hydra-basic-probe
+install -m 0755 hydra-basic-probe-init.d.sh $RPM_BUILD_ROOT/etc/init.d/hydra-basic-probe
 
 install -m 0755 -d $RPM_BUILD_ROOT/etc/hydra-basic-probe
 install -m 0644 hydra-basic-probe.cfg $RPM_BUILD_ROOT/etc/hydra-basic-probe/hydra-basic-probe.cfg

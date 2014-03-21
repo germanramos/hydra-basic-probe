@@ -37,9 +37,10 @@ python hydra_basic_probe.py [-c config_file]
 ```
 
 # Make rpm
-http://tecadmin.net/create-rpm-of-your-own-script-in-centosredhat/#
-http://blogdrake.net/blog/will/clase-de-empaquetado-rpm-parte-4
-
+http://tecadmin.net/create-rpm-of-your-own-script-in-centosredhat/#  
+http://blogdrake.net/blog/will/clase-de-empaquetado-rpm-parte-4  
+Easy way to create a Debian package and local package repository  
+  
 tree rpmbuild/
 rpmbuild/
 ├── BUILD

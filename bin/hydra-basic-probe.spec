@@ -4,7 +4,7 @@ Release: 0
 Summary: Hydra Basic Probe rpm
 Source0: hydra-basic-probe-2.0.tar.gz
 License: MIT
-Group: Applications
+Group: custom
 URL: https://github.com/innotech/hydra-basic-probe
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-buildroot

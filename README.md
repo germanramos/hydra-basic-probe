@@ -1,38 +1,28 @@
 Hydra Basic Probe
 =================
 
-Monitors system resources of the system.
+Monitors system resources of the system.  
 Monitors a proccess and port of our application and notifies to one or more hydra servers
 
-# Deploy
+# Installation
 
-## Prerequisites
-* build tools (gcc 4.2+, build-essential)
-  * yum groupinstall 'Development Tools'
-* python 2.6+
-* python-devel package
-  * yum install python-devel
-* pip python package manager 
-  * wget https://bitbucket.org/pypa/setuptools/raw/0.7.4/ez_setup.py -O - | python
-  * curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-  * [sudo] python get-pip.py
-* python psutil
-  * pip install psutil 
-* ssh
-* git
-
-## Get source code
-
+## Ubuntu/Debian
 ```
-git clone https://github.com/innotech/hydra_basic_probe.git
+dpkg -i hydra-basic-probe-2-0.noarch.deb
+apt-get install -f
+```
+## CentOS/RedHat/Fedora
+```
+yum install python-psutil-0.6.1-1.el6.x86_64.rpm hydra-basic-probe-2-0.noarch.rpm 
 ```
 
-# Configuring
+# Configuration
 
-First tune config file. See example with documetation at nagios_basic_probe.cfg
+First, tune configuration at /etc/hydra-basic-probe.  
+See hydra-basic-probe.cfg file pre configured for sshd monitoring.  
+See NAGIOS example parsed file nagios-parse-example.txt
 
-# Launching
+# Run
 ```
-python hydra_basic_probe.py [-c config_file]
+sudo /etc/init.d/hydra-basic-probe start
 ```
-

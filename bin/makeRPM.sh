@@ -1,5 +1,9 @@
 #!/bin/bash
+
+### http://tecadmin.net/create-rpm-of-your-own-script-in-centosredhat/#
+
 sudo yum install rpm-build rpmdevtools
+rm -rf ~/rpmbuild
 rpmdev-setuptree
 
 mkdir ~/rpmbuild/SOURCES/hydra-basic-probe-2

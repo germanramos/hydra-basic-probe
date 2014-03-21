@@ -5,8 +5,8 @@ Maintainer: innotech
 Installed-Size: 80
 Section: custom
 Priority: extra
-Depends: ${python-psutil:Depends}
-Description: Hydra Basic Probe rpm
+Depends: python-psutil
+Description: Hydra Basic Probe
  Monitors system resources of the system.
  Monitors a proccess and port of our application and notifies to one or more hydra servers
  .

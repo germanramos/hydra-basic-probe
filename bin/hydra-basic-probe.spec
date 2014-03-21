@@ -1,7 +1,7 @@
 Name: hydra-basic-probe
 Version: 2
 Release: 0
-Summary: Hydra Basic Probe rpm
+Summary: Hydra Basic Probe
 Source0: hydra-basic-probe-2.0.tar.gz
 License: MIT
 Group: custom

@@ -16,11 +16,14 @@ Monitors a proccess and port of our application and notifies to one or more hydr
 %setup -q
 %build
 %install
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/hydra_basic_probe
+install -m 0755 hydra_basic_probe.py $RPM_BUILD_ROOT/usr/local/hydra_basic_probe/hydra_basic_probe.py
+install -m 0644 parseStatusDat.py $RPM_BUILD_ROOT/usr/local/hydra_basic_probe/parseStatusDat.py
+install -m 0644 forever.sh $RPM_BUILD_ROOT/usr/local/hydra_basic_probe/forever.sh
+install -m 0755 hydra_basic_probe_init.d.sh $RPM_BUILD_ROOT/etc/init.d/hydra_basic_probe
 install -m 0755 -d $RPM_BUILD_ROOT/etc/hydra_basic_probe
-install -m 0755 hydra_basic_probe.py $RPM_BUILD_ROOT/etc/hydra_basic_probe/hydra_basic_probe.py
 install -m 0644 hydra_basic_probe.cfg $RPM_BUILD_ROOT/etc/hydra_basic_probe/hydra_basic_probe.cfg
 install -m 0644 nagios_parse_example.txt $RPM_BUILD_ROOT/etc/hydra_basic_probe/nagios_parse_example.txt
-install -m 0644 parseStatusDat.py $RPM_BUILD_ROOT/etc/hydra_basic_probe/parseStatusDat.py
 install -m 0644 README.md $RPM_BUILD_ROOT/etc/hydra_basic_probe/README.md
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -28,12 +31,13 @@ rm -rf $RPM_BUILD_ROOT
 echo   You should edit config file /etc/hydra_basic_probe/hydra_basic_probe.cfg
 %files
 %dir /etc/hydra_basic_probe
-/etc/hydra_basic_probe/hydra_basic_probe.py
+/usr/local/hydra_basic_probe/hydra_basic_probe.py
+/usr/local/hydra_basic_probe/hydra_basic_probe.pyc
+/usr/local/hydra_basic_probe/hydra_basic_probe.pyo
+/usr/local/hydra_basic_probe/parseStatusDat.py
+/usr/local/hydra_basic_probe/parseStatusDat.pyc
+/usr/local/hydra_basic_probe/parseStatusDat.pyo
+/etc/init.d/forever.sh
 /etc/hydra_basic_probe/hydra_basic_probe.cfg
 /etc/hydra_basic_probe/nagios_parse_example.txt
 /etc/hydra_basic_probe/README.md
-/etc/hydra_basic_probe/hydra_basic_probe.pyc
-/etc/hydra_basic_probe/hydra_basic_probe.pyo
-/etc/hydra_basic_probe/parseStatusDat.py
-/etc/hydra_basic_probe/parseStatusDat.pyc
-/etc/hydra_basic_probe/parseStatusDat.pyo

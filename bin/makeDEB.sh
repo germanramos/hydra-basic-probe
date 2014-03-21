@@ -26,4 +26,4 @@ pushd ~
 sudo dpkg-deb --build debbuild
 
 popd
-sudo mv ~/debbuild.deb hydra-basic-probe-2.0.noarch.deb
+sudo mv ~/debbuild.deb hydra-basic-probe-2-0.noarch.deb

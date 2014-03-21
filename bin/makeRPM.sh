@@ -4,7 +4,7 @@ rpmdev-setuptree
 
 mkdir ~/rpmbuild/SOURCES/hydra-basic-probe-2
 cp ../src/*  ~/rpmbuild/SOURCES/hydra-basic-probe-2
-cp hydra_basic_probe_init.d.sh ~/rpmbuild/SOURCES/hydra-basic-probe-2
+cp hydra-basic-probe-init.d.sh ~/rpmbuild/SOURCES/hydra-basic-probe-2
 cp forever.sh ~/rpmbuild/SOURCES/hydra-basic-probe-2
 cp hydra-basic-probe.spec ~/rpmbuild/SPECS
 

@@ -124,7 +124,7 @@ def main(argv=None):
     try:
         # setup option parser
         parser = OptionParser(version=program_version_string, epilog=program_longdesc, description=program_license)
-        parser.add_option("-c", "--config", default="hydra_basic_probe.cfg", dest="configFile", action="store", help="set configuration file [default: %default]")
+        parser.add_option("-c", "--config", default="hydra-basic-probe.cfg", dest="configFile", action="store", help="set configuration file [default: %default]")
       
         # process options
         (opts, _args) = parser.parse_args(argv)

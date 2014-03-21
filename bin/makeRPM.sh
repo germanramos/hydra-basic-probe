@@ -5,6 +5,7 @@ mkdir ~/rpmbuild/SOURCES/hydra_basic_probe-2
 
 cp ../src/*  ~/rpmbuild/SOURCES/hydra_basic_probe-2
 cp hydra_basic_probe_init.d.sh ~/rpmbuild/SOURCES/hydra_basic_probe-2
+cp forever.sh ~/rpmbuild/SOURCES/hydra_basic_probe-2
 cp hydra_basic_probe.spec ~/rpmbuild/SPECS
 
 cd ~/rpmbuild/SOURCES/

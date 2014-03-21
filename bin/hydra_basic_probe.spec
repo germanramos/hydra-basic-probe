@@ -20,7 +20,10 @@ install -m 0755 -d $RPM_BUILD_ROOT/usr/local/hydra_basic_probe
 install -m 0755 hydra_basic_probe.py $RPM_BUILD_ROOT/usr/local/hydra_basic_probe/hydra_basic_probe.py
 install -m 0644 parseStatusDat.py $RPM_BUILD_ROOT/usr/local/hydra_basic_probe/parseStatusDat.py
 install -m 0644 forever.sh $RPM_BUILD_ROOT/usr/local/hydra_basic_probe/forever.sh
+
+install -m 0755 -d $RPM_BUILD_ROOT/etc/init.d
 install -m 0755 hydra_basic_probe_init.d.sh $RPM_BUILD_ROOT/etc/init.d/hydra_basic_probe
+
 install -m 0755 -d $RPM_BUILD_ROOT/etc/hydra_basic_probe
 install -m 0644 hydra_basic_probe.cfg $RPM_BUILD_ROOT/etc/hydra_basic_probe/hydra_basic_probe.cfg
 install -m 0644 nagios_parse_example.txt $RPM_BUILD_ROOT/etc/hydra_basic_probe/nagios_parse_example.txt

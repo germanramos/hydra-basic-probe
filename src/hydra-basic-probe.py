@@ -3,7 +3,7 @@
 '''
 hydra basic probe -- Simple probe for hydra. Proactive version
 
-The hydra basic probe is in charge of check and monitor one server and update the status information at one or several Hydra Servers using the restful server API.
+The hydra basic probe is in charge of checkProcessAndPortAndGetSystemInfo and monitor one server and update the status information at one or several Hydra Servers using the restful server API.
 
 The basic functionality is to notify to one Hydra Server when an application is Started, Stopping, or Removed. In addition, it will provide information about the server health status like CPU and memory usage and any useful information like the size of the server or the prefered balance strategy.
 
@@ -24,6 +24,7 @@ import ConfigParser
 import psutil
 import socket
 import parseStatusDat
+import threading
 
 __all__ = []
 __version__ = 2.0
@@ -33,13 +34,14 @@ __updated__ = '2014-03-20'
 TESTRUN = 0
 PROFILE = 0
 config = 0
+hydras = []
 
 class stateEnum:
     READY = 0
     NOT_RUNNING = 1
     NOT_LISTENING = 2
 
-def isOpen(ip,port):
+def isPortOpen(ip,port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         s.connect((ip, int(port)))
@@ -48,7 +50,7 @@ def isOpen(ip,port):
     except:
         return stateEnum.NOT_LISTENING
 
-def check():
+def checkProcessAndPortAndGetSystemInfo():
     data = {"state": stateEnum.NOT_RUNNING}
     try:
         # Check process
@@ -68,7 +70,7 @@ def check():
         # Check port open (if option exists) 
         if config.get("MAIN", "check_enabled") == "true" and config.has_option("MAIN", "check_host") and config.has_option("MAIN", "check_port"):
             logging.debug("Checking Host and Port")
-            data["state"] = isOpen(config.get("MAIN", "check_host"), int(config.get("MAIN", "check_port")))
+            data["state"] = isPortOpen(config.get("MAIN", "check_host"), int(config.get("MAIN", "check_port")))
         else:
             data["state"] = stateEnum.READY
              
@@ -78,22 +80,58 @@ def check():
               
     return data
 
-def send(data):
+def postDataToHydra(data):
     answer = json.dumps(data)
     logging.debug("Data to post:")
     logging.debug(answer)
     #POST
-    for key,hydra in config.items("HYDRAS"):
-        logging.debug("Posting to " + hydra)                   
+    for hydra in hydras:
+        post_url = hydra + "/app/" + config.get("MAIN", "app_id")
+        logging.debug("Posting to " + post_url)                   
         opener = urllib2.build_opener(urllib2.HTTPHandler)
-        request = urllib2.Request(hydra + "/app/" + config.get("MAIN", "app_id"), answer)
+        headers = {
+                   'hydra_access_key':config.get("MAIN", "hydra_access_key"),
+                   'hydra_secret_key':config.get("MAIN", "hydra_secret_key")
+                   }
+        request = urllib2.Request(post_url, answer, headers=headers)
         request.add_header("content-type", "application/json")
-        #request.get_method = lambda: 'POST'
-        url = opener.open(request)
+        url = opener.open(request, timeout=int(config.get("MAIN", "timeout")))
         if url.code != 200:
             logging.error("Error connecting with hydra {0}: Code: {1}".format(hydra,url.code))
         else:
             logging.debug("Posted OK")
+            break
+        
+def updateHydras():
+    logging.debug("** Updating Hydras **")
+    global hydras
+    result = []
+    for key,hydra in config.items("HYDRAS"):
+        result += [hydra]
+    
+    for hydra in hydras:
+        try:
+            get_url = hydra + '/app/hydra'
+            headers = {'hydra_access_key':config.get("MAIN", "hydra_access_key")}
+            request = urllib2.Request(get_url, headers=headers)
+            response = urllib2.urlopen(request, timeout=int(config.get("MAIN", "timeout")))
+            new_hydras = json.loads(response.read())
+            if len(new_hydras)>0:                
+                # Merge with no duplicates. Always config hydras first
+                result = result + list(set(new_hydras) - set(result))
+                break
+            else:
+                logging.error("Empty hydra list received from " + get_url)
+        except Exception, e:
+            logging.error("Exception updating hydras: " + str(e))
+    
+    logging.debug("Updated hydra servers list:")
+    logging.debug(result)
+    hydras = result    
+    
+    t = threading.Timer(int(config.get("MAIN","hydra_refresh")), updateHydras)
+    t.setDaemon(True)
+    t.start()
             
 def getNagios():
     result = {}
@@ -146,18 +184,24 @@ def main(argv=None):
         logging.getLogger().addHandler(fileHandler)
         print "Logging to " + config.get("MAIN", "log_file");
         
+        # Launch update hydra proccess
+        global hydras
+        for key,hydra in config.items("HYDRAS"):
+            hydras += [hydra]
+        updateHydras()
+        
         # MAIN BODY #
         while True:
             try:
                 logging.debug("*** BEGIN ITERATION ***")
-                data = check()
+                data = checkProcessAndPortAndGetSystemInfo()
                 
                 for key,value in config.items("ATTRIBUTES"):
                     data[key] = value
                 
                 data = dict(data.items() + getNagios().items())
                 
-                send(data)
+                postDataToHydra(data)
                 
             except Exception, e:
                 logging.error("Exception: " + str(e))

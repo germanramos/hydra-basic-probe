@@ -30,6 +30,7 @@ install -m 0644 nagios-parse-example.txt $RPM_BUILD_ROOT/etc/hydra-basic-probe/n
 rm -rf $RPM_BUILD_ROOT
 %post
 echo   You should edit config file /etc/hydra-basic-probe/hydra-basic-probe.cfg
+echo   When finished, you may want to run \"update-rc.d hydra-basic-probe defaults\"
 %files
 %dir /etc/hydra-basic-probe
 /usr/local/hydra-basic-probe/hydra-basic-probe.py

@@ -51,7 +51,7 @@ def isPortOpen(ip,port):
         return stateEnum.NOT_LISTENING
 
 def checkProcessAndPortAndGetSystemInfo():
-    data = {"state": stateEnum.NOT_RUNNING}
+    data = {"state": stateEnum.NOT_RUNNING, "uri": config.get("MAIN", "uri")}
     try:
         # Check process
         f = open(config.get("MAIN", "pid_file"), 'r+')
@@ -80,28 +80,32 @@ def checkProcessAndPortAndGetSystemInfo():
               
     return data
 
-def postDataToHydra(data):
-    answer = json.dumps(data)
+def postDataToHydra(attributes):  
+    hydra_data = {socket.gethostname(): attributes}
+    answer = json.dumps(hydra_data)
     logging.debug("Data to post:")
     logging.debug(answer)
-    #POST
+    
     for hydra in hydras:
-        post_url = hydra + "/app/" + config.get("MAIN", "app_id")
+        post_url = hydra + "/apps/" + config.get("MAIN", "app_id") + "/instances"
         logging.debug("Posting to " + post_url)                   
         opener = urllib2.build_opener(urllib2.HTTPHandler)
         headers = {
                    'hydra_access_key':config.get("MAIN", "hydra_access_key"),
                    'hydra_secret_key':config.get("MAIN", "hydra_secret_key")
                    }
-        request = urllib2.Request(post_url, answer, headers=headers)
-        request.add_header("content-type", "application/json")
-        url = opener.open(request, timeout=int(config.get("MAIN", "timeout")))
-        if url.code != 200:
-            logging.error("Error connecting with hydra {0}: Code: {1}".format(hydra,url.code))
-        else:
-            logging.debug("Posted OK")
-            break
-        
+        try:
+            request = urllib2.Request(post_url, answer, headers=headers)
+            request.add_header("content-type", "application/json")
+            url = opener.open(request, timeout=int(config.get("MAIN", "timeout")))
+            if url.code != 200:
+                logging.error("Error connecting with hydra {0}: Code: {1}".format(hydra,url.code))
+            else:
+                logging.debug("Posted OK")
+                break
+        except Exception, e:
+            logging.error("Exception connecting with hydra {0}".format(hydra))
+            
 def updateHydras():
     logging.debug("** Updating Hydras **")
     global hydras

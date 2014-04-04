@@ -16,10 +16,11 @@ class stateEnum:
     NOT_LISTENING = 2
 
 def isPortOpen(ip,port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        s.connect((ip, int(port)))
-        s.shutdown(2)
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print s
+        print s.connect((ip, int(port)))
+        print s.shutdown(2)
         return stateEnum.READY
     except:
         return stateEnum.NOT_LISTENING
@@ -88,7 +89,6 @@ def updateHydras():
     config = configuration.getConfig()
     hydras = configuration.getHydras()
     logging.debug("** Updating Hydras **")
-    global hydras
     result = []
     for key,hydra in config.items("HYDRAS"):
         result += [hydra]
@@ -118,6 +118,7 @@ def updateHydras():
     t.start()
             
 def getNagios():
+    config = configuration.getConfig()
     result = {}
     try:
         if config.has_section("NAGIOS"):

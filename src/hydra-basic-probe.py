@@ -78,15 +78,15 @@ def main(argv=None):
                 
                 for key,value in config.items("ATTRIBUTES"):
                     data[key] = value
-                
+        
                 data = dict(data.items() + getNagios().items())
-                
                 postDataToHydra(data)
+                time.sleep(config.getint("MAIN", "sleep_time"));
                 
             except Exception, e:
                 logging.error("Exception: " + str(e))
                 
-            time.sleep(config.getint("MAIN", "sleep_time"));
+            
         
     except Exception, e:
         indent = len(program_name) * " "

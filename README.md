@@ -1,6 +1,8 @@
 Hydra Basic Probe
 =================
 
+[![Build Status](https://travis-ci.org/innotech/hydra-basic-probe.png)](https://travis-ci.org/innotech/hydra-basic-probe)
+
 Monitors system resources of the system.  
 Monitors a proccess and port of our application and notifies to one or more hydra servers
 

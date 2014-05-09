@@ -66,7 +66,7 @@ def postDataToHydra(attributes):
     logging.debug(answer)
     
     for hydra in hydras:
-        post_url = hydra + "/apps/" + config.get("MAIN", "app_id") + "/instances"
+        post_url = hydra + "/apps/" + config.get("MAIN", "app_id") + "/Instances"
         logging.debug("Posting to " + post_url)                   
         opener = urllib2.build_opener(urllib2.HTTPHandler)
         headers = {

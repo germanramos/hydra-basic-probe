@@ -60,7 +60,12 @@ def checkProcessAndPortAndGetSystemInfo():
 def postDataToHydra(attributes):
     config = configuration.getConfig()
     hydras = configuration.getHydras()
-    hydra_data = {socket.gethostname(): attributes}
+    hostname = None
+    try:
+        hostname = config.get("MAIN", "hostname")
+    except Exception:
+        hostname = socket.gethostname()
+    hydra_data = {hostname: attributes}
     answer = json.dumps(hydra_data)
     logging.debug("Data to post:")
     logging.debug(answer)
@@ -83,6 +88,7 @@ def postDataToHydra(attributes):
                 logging.debug("Posted OK")
                 break
         except Exception, e:
+            logging.error(str(e))
             logging.error("Exception connecting with hydra {0}".format(hydra))
             
 def updateHydras():

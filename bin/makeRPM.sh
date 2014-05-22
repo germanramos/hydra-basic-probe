@@ -9,9 +9,12 @@ rpmdev-setuptree
 mkdir ~/rpmbuild/SOURCES/hydra-basic-probe-2
 cp ../src/hydra-basic-probe.py  ~/rpmbuild/SOURCES/hydra-basic-probe-2
 cp ../src/parseStatusDat.py  ~/rpmbuild/SOURCES/hydra-basic-probe-2
+cp ../src/configuration.py  ~/rpmbuild/SOURCES/hydra-basic-probe-2
+cp ../src/probeLib.py  ~/rpmbuild/SOURCES/hydra-basic-probe-2
 cp ../src/hydra-basic-probe.cfg  ~/rpmbuild/SOURCES/hydra-basic-probe-2
 cp ../src/nagios-parse-example.txt  ~/rpmbuild/SOURCES/hydra-basic-probe-2
 cp hydra-basic-probe-init.d.sh ~/rpmbuild/SOURCES/hydra-basic-probe-2
+
 
 cp hydra-basic-probe.spec ~/rpmbuild/SPECS
 

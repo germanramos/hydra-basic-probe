@@ -16,6 +16,8 @@ cp hydra-basic-probe-init.d.sh ~/debbuild/etc/init.d/hydra-basic-probe
 mkdir -p ~/debbuild/usr/local/hydra-basic-probe
 cp ../src/hydra-basic-probe.py  ~/debbuild/usr/local/hydra-basic-probe
 cp ../src/parseStatusDat.py  ~/debbuild/usr/local/hydra-basic-probe
+cp ../src/configuration.py  ~/debbuild/usr/local/hydra-basic-probe
+cp ../src/probeLib.py  ~/debbuild/usr/local/hydra-basic-probe
 
 chmod -R 644 ~/debbuild/usr/local/hydra-basic-probe/* ~/debbuild/etc/hydra-basic-probe/*
 chmod 755 ~/debbuild/etc/init.d/hydra-basic-probe

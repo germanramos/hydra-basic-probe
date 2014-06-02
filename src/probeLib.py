@@ -71,7 +71,9 @@ def postDataToHydra(attributes):
     logging.debug(answer)
     
     for hydra in hydras:
-        post_url = hydra + "/apps/" + config.get("MAIN", "app_id") + "/Instances"
+        lines = hydra.split(":")
+        post_url = lines[0] + ":" + lines[1] + ":" + config.get("MAIN", "hydra_admin_port") + "/apps/" + config.get("MAIN", "app_id") + "/Instances" 
+        #post_url = hydra + "/apps/" + config.get("MAIN", "app_id") + "/Instances"
         logging.debug("Posting to " + post_url)                   
         opener = urllib2.build_opener(urllib2.HTTPHandler)
         headers = {
@@ -101,7 +103,7 @@ def updateHydras():
     
     for hydra in hydras:
         try:
-            get_url = hydra + '/app/hydra'
+            get_url = hydra + '/apps/hydra'
             headers = {'hydra_access_key':config.get("MAIN", "hydra_access_key")}
             request = urllib2.Request(get_url, headers=headers)
             response = urllib2.urlopen(request, timeout=int(config.get("MAIN", "timeout")))
@@ -119,7 +121,7 @@ def updateHydras():
     logging.debug(result)
     configuration.setHydras(result)    
     
-    t = threading.Timer(int(config.get("MAIN","hydra_refresh")), updateHydras)
+    t = threading.Timer(int(config.get("MAIN","hydra_refresh_interval")), updateHydras)
     t.setDaemon(True)
     t.start()
             

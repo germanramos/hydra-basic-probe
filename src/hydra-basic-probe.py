@@ -17,6 +17,7 @@ from logging.config import fileConfig
 
 import configuration
 import parseStatusDat
+from demoServer import *
 from probeLib import * 
 
 __all__ = []
@@ -66,9 +67,14 @@ def main(argv=None):
         # Launch update hydra proccess
         global hydras
         for key,hydra in config.items("HYDRAS"):
-            hydras += [hydra]
+            hydras += [hydra + ":" + config.get("MAIN", "hydra_admin_port")]
         configuration.setHydras(hydras)
-        updateHydras()
+        if config.get("MAIN", "hydra_refresh") == "true":
+            updateHydras()
+        
+        # Launch demo process
+        if config.get("MAIN", "demo_mode") == "true":
+            demoServer()
         
         # MAIN BODY #
         while True:
@@ -91,7 +97,7 @@ def main(argv=None):
     except Exception, e:
         indent = len(program_name) * " "
         sys.stderr.write(program_name + ": " + repr(e) + "\n")
-        sys.stderr.write(indent + "  for help use --help")
+        sys.stderr.write(indent + "  for help use --help\n")
         return 2
 
 

@@ -21,6 +21,7 @@ install -m 0755 hydra-basic-probe.py $RPM_BUILD_ROOT/usr/local/hydra-basic-probe
 install -m 0644 parseStatusDat.py $RPM_BUILD_ROOT/usr/local/hydra-basic-probe/parseStatusDat.py
 install -m 0644 configuration.py $RPM_BUILD_ROOT/usr/local/hydra-basic-probe/configuration.py
 install -m 0644 probeLib.py $RPM_BUILD_ROOT/usr/local/hydra-basic-probe/probeLib.py
+install -m 0644 demoServer.py $RPM_BUILD_ROOT/usr/local/hydra-basic-probe/demoServer.py
 
 install -m 0755 -d $RPM_BUILD_ROOT/etc/init.d
 install -m 0755 hydra-basic-probe-init.d.sh $RPM_BUILD_ROOT/etc/init.d/hydra-basic-probe
@@ -47,6 +48,9 @@ echo   When finished, you may want to run \"update-rc.d hydra-basic-probe defaul
 /usr/local/hydra-basic-probe/probeLib.py
 /usr/local/hydra-basic-probe/probeLib.pyc
 /usr/local/hydra-basic-probe/probeLib.pyo
+/usr/local/hydra-basic-probe/demoServer.py
+/usr/local/hydra-basic-probe/demoServer.pyc
+/usr/local/hydra-basic-probe/demoServer.pyo
 /etc/hydra-basic-probe/hydra-basic-probe.cfg
 /etc/hydra-basic-probe/nagios-parse-example.txt
 /etc/init.d/hydra-basic-probe

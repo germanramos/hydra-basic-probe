@@ -34,6 +34,9 @@ def isHalted():
 
 def isStressed():
     return time.time() - stress < STRESS_TIME
+
+def isLocked():
+    return time.time() - lock < LOCK_TIME
     
 class ThreadedHTTPServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
         pass
@@ -67,7 +70,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 pwd = splited2[1]
         self.path = splited[0];
         
-        if time.time() - lock < LOCK_TIME and pwd != PASSWORD and (self.path == "/stress" or self.path == "/halt" or self.path == "/ready"):
+        if isLocked() and pwd != PASSWORD and (self.path == "/stress" or self.path == "/halt" or self.path == "/ready"):
             data = "LOCKED"    
         elif self.path == "/lock":
             if pwd == PASSWORD:
@@ -95,6 +98,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             data = {}
             data["halted"] = isHalted()
             data["stressed"] = isStressed()
+            data["locked"] = isLocked()
         else:
             data = "UNKNOWN"
         self.wfile.write(json.dumps(data))

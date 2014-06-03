@@ -40,7 +40,7 @@ def checkProcessAndPortAndGetSystemInfo():
         
         # Check CPU and Memory
         logging.debug("Checking CPU and Memory")
-        data["cpuLoad"] = psutil.cpu_percent(interval=0.1, percpu=False)
+        data["cpuLoad"] = psutil.cpu_percent(interval=0.5, percpu=False)
         #data["memLoad"] = psutil.virtual_memory().percent
         data["memLoad"] = psutil.phymem_usage().percent
         

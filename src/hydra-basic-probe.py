@@ -14,6 +14,8 @@ All these information should be updated periodically. If not, the Hydra server w
 from optparse import OptionParser
 import ConfigParser
 from logging.config import fileConfig 
+from threading import Thread
+import random
 
 import configuration
 import parseStatusDat
@@ -74,13 +76,25 @@ def main(argv=None):
         
         # Launch demo process
         if config.get("MAIN", "demo_mode") == "true":
-            demoServer()
+            #demoServer()
+            th = Thread(target=demoServer)
+            th.daemon = True
+            th.start()
+            
         
         # MAIN BODY #
         while True:
             try:
                 logging.debug("*** BEGIN ITERATION ***")
                 data = checkProcessAndPortAndGetSystemInfo()
+                if config.get("MAIN", "demo_mode") == "true" and isHalted():
+                    data["state"] = 1
+                    data["halted"] = True;
+                elif config.get("MAIN", "demo_mode") == "true" and isStressed():
+                    data["state"] = 0
+                    data["cpuLoad"] = 90 + random.randint(0, 10)
+                    data["memLoad"] = 90 + random.randint(0, 10)
+                    data["stressed"] = True;
                 
                 for key,value in config.items("ATTRIBUTES"):
                     data[key] = value

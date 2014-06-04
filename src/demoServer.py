@@ -5,9 +5,9 @@ import time
 import json
 
 PASSWORD = ""
-STRESS_TIME = 45;
-HALT_TIME = 90
 LOCK_TIME = 1800
+HALT_TIME = 90
+STRESS_TIME = 45
 LISTEN_HOST = "0.0.0.0"
 LISTEN_PORT = 9099
 stress = 0;
@@ -18,7 +18,13 @@ lock = 0
 def demoServer():
     config = configuration.getConfig()
     global PASSWORD
-    PASSWORD = config.get("MAIN", "demo_password")    
+    global LOCK_TIME
+    global HALT_TIME
+    global STRESS_TIME
+    PASSWORD = config.get("MAIN", "demo_password")
+    LOCK_TIME = int(config.get("MAIN", "demo_lock_time")) * 1000
+    HALT_TIME = int(config.get("MAIN", "demo_halt_time")) * 1000
+    STRESS_TIME = int(config.get("MAIN", "demo_stress_time")) * 1000
     server_class = ThreadedHTTPServer
     httpd = server_class((LISTEN_HOST, LISTEN_PORT), MyHandler)
     print time.asctime(), "Demo Server Starts - %s:%s" % (LISTEN_HOST, LISTEN_PORT)

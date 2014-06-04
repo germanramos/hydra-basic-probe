@@ -89,12 +89,20 @@ def main(argv=None):
                 data = checkProcessAndPortAndGetSystemInfo()
                 if config.get("MAIN", "demo_mode") == "true" and isHalted():
                     data["state"] = 1
-                    data["halted"] = True;
                 elif config.get("MAIN", "demo_mode") == "true" and isStressed():
                     data["state"] = 0
                     data["cpuLoad"] = 90 + random.randint(0, 10)
                     data["memLoad"] = 90 + random.randint(0, 10)
-                    data["stressed"] = True;
+                
+                if config.get("MAIN", "demo_mode") == "true":
+                    if isLocked():
+                        data["demoMode"] = "locked"
+                    else:
+                        data["demoMode"] = "unlocked"
+                    if isHalted():
+                        data["demoMode"] += ", halted"
+                    if isStressed():
+                        data["demoMode"] += ", stressed"
                 
                 for key,value in config.items("ATTRIBUTES"):
                     data[key] = value

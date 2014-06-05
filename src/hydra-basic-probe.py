@@ -100,9 +100,9 @@ def main(argv=None):
                     else:
                         data["demoMode"] = "unlocked"
                     if isHalted():
-                        data["demoMode"] += ", halted"
+                        data["demoMode"] += " | halted"
                     if isStressed():
-                        data["demoMode"] += ", stressed"
+                        data["demoMode"] += " | stressed"
                 
                 for key,value in config.items("ATTRIBUTES"):
                     data[key] = value

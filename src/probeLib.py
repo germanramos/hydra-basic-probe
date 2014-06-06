@@ -73,7 +73,6 @@ def postDataToHydra(attributes):
     for hydra in hydras:
         lines = hydra.split(":")
         post_url = lines[0] + ":" + lines[1] + ":" + config.get("MAIN", "hydra_admin_port") + "/apps/" + config.get("MAIN", "app_id") + "/Instances" 
-        #post_url = hydra + "/apps/" + config.get("MAIN", "app_id") + "/Instances"
         logging.debug("Posting to " + post_url)                   
         opener = urllib2.build_opener(urllib2.HTTPHandler)
         headers = {
@@ -85,13 +84,13 @@ def postDataToHydra(attributes):
             request.add_header("content-type", "application/json")
             url = opener.open(request, timeout=int(config.get("MAIN", "timeout")))
             if url.code != 200:
-                logging.error("Error connecting with hydra {0}: Code: {1}".format(hydra,url.code))
+                logging.error("Error connecting with hydra {0}: Code: {1}".format(post_url,url.code))
             else:
                 logging.debug("Posted OK")
                 break
         except Exception, e:
             logging.error(str(e))
-            logging.error("Exception connecting with hydra {0}".format(hydra))
+            logging.error("Exception connecting with hydra {0}".format(post_url))
             
 def updateHydras():
     config = configuration.getConfig()
@@ -104,6 +103,7 @@ def updateHydras():
     for hydra in hydras:
         try:
             get_url = hydra + '/apps/hydra'
+            logging.debug("Getting hydras from " + get_url)  
             headers = {'hydra_access_key':config.get("MAIN", "hydra_access_key")}
             request = urllib2.Request(get_url, headers=headers)
             response = urllib2.urlopen(request, timeout=int(config.get("MAIN", "timeout")))

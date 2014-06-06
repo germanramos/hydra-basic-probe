@@ -69,7 +69,7 @@ def main(argv=None):
         # Launch update hydra proccess
         global hydras
         for key,hydra in config.items("HYDRAS"):
-            hydras += [hydra + ":" + config.get("MAIN", "hydra_admin_port")]
+            hydras += [hydra];
         configuration.setHydras(hydras)
         if config.get("MAIN", "hydra_refresh") == "true":
             updateHydras()

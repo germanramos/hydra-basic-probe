@@ -22,9 +22,9 @@ def demoServer():
     global HALT_TIME
     global STRESS_TIME
     PASSWORD = config.get("MAIN", "demo_password")
-    LOCK_TIME = int(config.get("MAIN", "demo_lock_time")) * 1000
-    HALT_TIME = int(config.get("MAIN", "demo_halt_time")) * 1000
-    STRESS_TIME = int(config.get("MAIN", "demo_stress_time")) * 1000
+    LOCK_TIME = int(config.get("MAIN", "demo_lock_time"))
+    HALT_TIME = int(config.get("MAIN", "demo_halt_time"))
+    STRESS_TIME = int(config.get("MAIN", "demo_stress_time"))
     server_class = ThreadedHTTPServer
     httpd = server_class((LISTEN_HOST, LISTEN_PORT), MyHandler)
     print time.asctime(), "Demo Server Starts - %s:%s" % (LISTEN_HOST, LISTEN_PORT)

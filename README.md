@@ -35,7 +35,12 @@ sudo /etc/init.d/hydra-basic-probe start
 
 Authors:  
 Germán Ramos &lt;german.ramos@gmail.com&gt;  
-
+Pascual de Juan &lt;pascual.dejuan@gmail.com&gt;  
+Jonas da Cruz &lt;unlogic@gmail.com&gt;  
+Luis Mesas &lt;luismesas@gmail.com&gt;  
+Alejandro Penedo &lt;icedfiend@gmail.com&gt;  
+Jose María San José &lt;josem.sanjose@gmail.com&gt;  
+  
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 'Software'), to deal in the Software without restriction, including

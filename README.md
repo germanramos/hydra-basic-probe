@@ -21,8 +21,8 @@ yum install python-psutil-0.6.1-1.el6.x86_64.rpm hydra-basic-probe-2-0.noarch.rp
 # Configuration
 
 First, tune configuration at /etc/hydra-basic-probe.  
-See hydra-basic-probe.cfg file pre configured for sshd monitoring.  
-See NAGIOS example parsed file nagios-parse-example.txt
+See <a href="https://raw.githubusercontent.com/innotech/hydra-basic-probe/master/src/hydra-basic-probe.cfg">hydra-basic-probe.cfg</a> example file pre configured for sshd monitoring.  
+See <a href="https://raw.githubusercontent.com/innotech/hydra-basic-probe/master/src/nagios-parse-example.txt">nagios-parse-example.txt</a> file for an example of how Hydra Basic Probe parse the NAGIOS file.
 
 # Run
 ```

@@ -20,7 +20,22 @@ yum install python-psutil-0.6.1-1.el6.x86_64.rpm hydra-basic-probe-2-0.noarch.rp
 
 # Configuration
 
-First, tune configuration at /etc/hydra-basic-probe.  
+Hydra Basic Probe check that one service is alive by checking two things:  
+*  The PID exists
+*  One TCP port is open (this is optional)
+
+You have to specify the file that contains the 
+
+
+In order to run hydra-basic-probe properly you shoud tune one configuration file `/etc/hydra-basic-probe/hydra-basic-probe.cfg`:
+
+This file has 3 sections:
+
+## MAIN section
+This section contains all mandatory options that you should configure
+TODO
+
+
 See <a href="https://raw.githubusercontent.com/innotech/hydra-basic-probe/master/src/hydra-basic-probe.cfg">hydra-basic-probe.cfg</a> example file pre configured for sshd monitoring.  
 See <a href="https://raw.githubusercontent.com/innotech/hydra-basic-probe/master/src/nagios-parse-example.txt">nagios-parse-example.txt</a> file for an example of how Hydra Basic Probe parse the NAGIOS file.
 

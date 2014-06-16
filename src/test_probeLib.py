@@ -41,7 +41,12 @@ def test_checkProcessAndPortAndGetSystemInfo_should_return_status_0_when_process
     # Check
     print data
     assert data["state"] == 0
-    assert data["connections"] == 2
+    
+    # ORIGINAL
+    #assert data["connections"] == 2
+    
+    # ALTERNATIVE 1
+    assert data["connections"] == 1
     
     
     

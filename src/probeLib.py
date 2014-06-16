@@ -35,7 +35,20 @@ def checkProcessAndPortAndGetSystemInfo():
         PID = f.read()
         f.close()
         logging.debug("Checking PID " + PID.strip())
-        connections = len(psutil.Process(int(PID)).get_connections(kind='inet'))
+        
+        # ORIGINAL
+        #connections = len(psutil.Process(int(PID)).get_connections(kind='inet'))
+        
+        # ALTERNATIVE 1 (add)
+        connections = len(psutil.Process(int(PID)).get_connections(kind='inet')) - 1
+        
+        # ALTERNATIVE 2 (replace)
+        #connections = 0
+        #for connection in psutil.Process(int(PID)).get_connections(kind='inet'):
+        #    # WARINING!!!!!!!!! Changed in 1.0.0: 'status' field is no longer a string but a constant object (psutil.CONN_*).
+        #    if connection.status == 'ESTABLISHED':
+        #        connections = connections + 1
+        
         data["connections"] = connections
         
         # Check CPU and Memory
